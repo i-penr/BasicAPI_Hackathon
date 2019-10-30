@@ -60,6 +60,7 @@ function editUser(req, res) {
   User.findByIdAndUpdate(userId, req.body, { new: true }, (err, user) => {
     if (!user) { return res.status(404).send('User not found'); }
     if (err) { return res.status(500).send(err); }
+
     return res.status(200).send(`User successfully updated ${user}`);
   });
 }

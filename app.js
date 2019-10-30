@@ -1,11 +1,13 @@
 const bodyParser = require('body-parser');
 const express = require('express');
-const routes = require('./routes/userRoute');
+const userRoute = require('./routes/userRoute');
+const bookRoute = require('./routes/bookRoute');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/user', routes);
+app.use('/user', userRoute);
+app.use('/book', bookRoute);
 
 module.exports = app;
