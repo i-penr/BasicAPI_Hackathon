@@ -6,14 +6,14 @@ const Router = express.Router();
 
 // GET
 Router.get('/', bookController.getBooks);
-Router.get('/:bookId', bookController.getBookByID);
-Router.get('/:title', bookController.getBookByTitle);
-Router.get('/:isbn', bookController.getBookByISBN);
-Router.get('/:description', bookController.getBookByDescription);
-Router.get('/:author', bookController.getBookByAuthor);
-Router.get('/:price', bookController.getBookByPrice);
-Router.get('/:editorial', bookController.getBookByPublishr);
-Router.get('/:date', bookController.getBookByDate);
+Router.get('/id/:bookId', bookController.getBookByID);
+Router.get('/title/:title', bookController.getBookByTitle);
+Router.get('/isbn/:isbn', bookController.getBookByISBN);
+Router.get('/description/:description', bookController.getBookByDescription);
+Router.get('/author/:author', bookController.getBookByAuthor);
+Router.get('/price/:price', bookController.getBookByPrice);
+Router.get('/publisher/:editorial', bookController.getBookByPublishr);
+Router.get('/date/:date', bookController.getBookByDate);
 
 // POST
 Router.post('/', bookController.createBook);
