@@ -5,7 +5,6 @@ const auth = require('../middleware/tokenAuth');
 const router = express.Router();
 
 // GET
-router.get('/private', auth, (req, res) => { res.status(200).send('Tienes acceso'); });
 router.get('/', userController.getUsers);
 router.get('/:userId', userController.getUserByID);
 
