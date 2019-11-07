@@ -1,9 +1,11 @@
 const express = require('express');
 const userController = require('../controllers/users.controller');
+const auth = require('../middleware/tokenAuth');
 
 const router = express.Router();
 
 // GET
+router.get('/private', auth, (req, res) => { res.status(200).send('Tienes acceso'); });
 router.get('/', userController.getUsers);
 router.get('/:userId', userController.getUserByID);
 
@@ -12,12 +14,12 @@ router.post('/', userController.createUser);
 router.post('/:mail', userController.login);
 
 // PUT
-router.put('/:userId', userController.replaceUser);
+router.put('/private/:userId', auth, userController.replaceUser);
 
 // PATCH
-router.patch('/:userId', userController.editUser);
+router.patch('/private/:userId', auth, userController.editUser);
 
 // DELETE
-router.delete('/:userId', userController.deleteUser);
+router.delete('/private/:userId', auth, userController.deleteUser);
 
 module.exports = router;

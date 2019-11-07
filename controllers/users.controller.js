@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 const User = require('../models/user');
+const service = require('../middleware/service');
 
 function getUsers(req, res) {
   User.find({}, (error, users) => {
@@ -13,7 +14,7 @@ function getUserByID(req, res) {
   const { userId } = req.params;
 
   User.findById(userId, (error, user) => {
-    if (error || !user) { return res.status(404).send({ message: 'User not found' }); }
+    if (!user) { return res.status(404).send({ message: 'User not found' }); }
 
     return res.status(200).send(user);
   });
@@ -25,7 +26,7 @@ function createUser(req, res) {
   user.save((error, newUser) => {
     if (error) { return res.status(500).send({ message: `Error saving user ${error}` }); }
 
-    return res.status(200).send(`User created: ${newUser}`);
+    return res.status(200).send({ token: service.createToken(newUser) });
   });
 }
 
@@ -81,11 +82,17 @@ function login(req, res) {
   const { password } = req.body;
 
   User.findOne({ mail }, (error, user) => {
-    if (error) { return res.status(404).send('User not found'); }
+    if (error) { return res.status(500).send(error); }
+    if (!user) { return res.status(404).send('User not found'); }
 
-    if (password !== user.password) { return res.status(200).send('Password is incorrect'); }
 
-    return res.status(200).send({ message: 'Logged in successfully' });
+    user.comparePassword(password, (err, isMatch) => {
+      if (err) { return res.status(500).send(err); }
+
+      if (!isMatch) { return res.status(200).send('Incorrect password'); }
+
+      return res.status(200).send({ message: 'Logged in successfully', token: service.createToken(user) });
+    });
   });
 }
 
