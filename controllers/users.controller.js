@@ -87,9 +87,9 @@ function login(req, res) {
 
 
     user.comparePassword(password, (err, isMatch) => {
+      if (!isMatch) { return res.status(200).send({ message: 'Incorrect password' }); }
+      
       if (err) { return res.status(500).send(err); }
-
-      if (!isMatch) { return res.status(200).send('Incorrect password'); }
 
       return res.status(200).send({ message: 'Logged in successfully', token: service.createToken(user) });
     });
