@@ -87,7 +87,7 @@ function login(req, res) {
 
 
     user.comparePassword(password, (err, isMatch) => {
-      if (!isMatch) { return res.status(200).send({ message: 'Incorrect password' }); }
+      if (!isMatch) { return res.status(401).send({ message: 'Incorrect password' }); }
       
       if (err) { return res.status(500).send(err); }
 
