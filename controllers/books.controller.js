@@ -5,7 +5,7 @@ function getBooks(req, res) {
   Book.find({}, (err, book) => {
     if (err) { return res.status(500).send({ err }); }
 
-    return res.status(200).send({ book });
+    return res.status(200).send(book);
   });
 }
 
@@ -15,7 +15,7 @@ function getBookByID(req, res) {
   Book.findById(bookId, (error, book) => {
     if (error) { return res.status(500).send({ error }); }
 
-    return res.status(200).send({ book });
+    return res.status(200).send(book);
   });
 }
 
