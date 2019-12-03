@@ -13,6 +13,7 @@ function getBookByID(req, res) {
   const { bookId } = req.params;
 
   Book.findById(bookId, (error, book) => {
+    if (!book) { return res.status(404).send('Book not found'); }
     if (error) { return res.status(500).send({ error }); }
 
     return res.status(200).send(book);
@@ -22,7 +23,7 @@ function getBookByID(req, res) {
 function getBookByTitle(req, res) {
   const { title } = req.params;
 
-  Book.find({ title }, (err, book) => {
+  Book.find({ title: { $regex: title } }, (err, book) => {
     if (!book) { return res.status(404).send({ message: 'Book not found' }); }
     if (err) { return res.status(500).send({ err }); }
 
@@ -33,7 +34,7 @@ function getBookByTitle(req, res) {
 function getBookByISBN(req, res) {
   const { isbn } = req.params;
 
-  Book.find({ isbn }, (err, book) => {
+  Book.find({ isbn: { $regex: isbn} }, (err, book) => {
     if (!book) { return res.status(404).send({ message: 'Book not found' }); }
     if (err) { return res.status(500).send({ err }); }
 
@@ -44,7 +45,7 @@ function getBookByISBN(req, res) {
 function getBookByDescription(req, res) {
   const { description } = req.params;
 
-  Book.find({ description }, (err, book) => {
+  Book.find({ description: { $regex: description } }, (err, book) => {
     if (!book) { return res.status(404).send({ message: 'Book not found' }); }
     if (err) { return res.status(500).send({ err }); }
 
@@ -55,7 +56,7 @@ function getBookByDescription(req, res) {
 function getBookByDate(req, res) {
   const { date } = req.params;
 
-  Book.find({ date }, (err, book) => {
+  Book.find({ date: { $regex: description } }, (err, book) => {
     if (!book) { return res.status(404).send({ message: 'Book not found' }); }
     if (err) { return res.status(500).send({ err }); }
 
@@ -66,7 +67,7 @@ function getBookByDate(req, res) {
 function getBookByAuthor(req, res) {
   const { author } = req.params;
 
-  Book.find({ author }, (err, book) => {
+  Book.find({ author: { $regex: author } }, (err, book) => {
     if (!book) { return res.status(404).send({ message: 'Book not found' }); }
     if (err) { return res.status(500).send({ err }); }
 
@@ -77,7 +78,7 @@ function getBookByAuthor(req, res) {
 function getBookByPrice(req, res) {
   const { price } = req.params;
 
-  Book.find({ price }, (err, book) => {
+  Book.find({ price: { $regex: price } }, (err, book) => {
     if (!book) { return res.status(404).send({ message: 'Book not found' }); }
     if (err) { return res.status(500).send({ err }); }
 
@@ -88,7 +89,7 @@ function getBookByPrice(req, res) {
 function getBookByPublishr(req, res) {
   const { editorial } = req.params;
 
-  Book.find({ editorial }, (err, book) => {
+  Book.find({ editorial: { $regex: editorial } }, (err, book) => {
     if (!book) { return res.status(404).send({ message: 'Book not found' }); }
     if (err) { return res.status(500).send({ err }); }
 
